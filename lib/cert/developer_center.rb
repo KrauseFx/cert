@@ -109,7 +109,7 @@ module Cert
       ENV["CER_CERTIFICATE_ID"] = certificate_id
       Helper.log.info "Successfully downloaded latest .cer file to '#{path}' (#{certificate_id})".green
 
-      Cert::KeychainImporter::import_file(path)
+      Cert::KeychainImporter::import_file(path) unless Cert.config[:skip_keychain_import]
     rescue => ex
       error_occured(ex)
     end
