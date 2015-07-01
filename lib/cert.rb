@@ -14,9 +14,6 @@ module Cert
     attr_accessor :config
   end
 
-  TMP_FOLDER = ENV["CERT_OUTPUT_PATH"]
-  FileUtils.mkdir_p TMP_FOLDER
-
   Helper = FastlaneCore::Helper # you gotta love Ruby: Helper.* should use the Helper class contained in FastlaneCore
 
   ENV['FASTLANE_TEAM_ID'] ||= ENV["CERT_TEAM_ID"]
