@@ -102,6 +102,8 @@ In case you prefer environment variables:
 - ```CERT_KEYCHAIN_PATH``` The path to a specific Keychain if you don't want to use the default one
 - ```CERT_SIGNING_REQUEST_PATH``` Path to your own signing request file
 - ```FASTLANE_TEAM_NAME``` (the Team Name, e.g. `Felix Krause`)
+- ```CERT_OUTPUT_PATH``` Path where signing data should be stored (signing request, certificate, private key)
+- ```CERT_SKIP_KEYCHAIN_IMPORT``` Should skip signing identity import into keystore
 
 ## Use with [`sigh`](https://github.com/KrauseFx/sigh)
 

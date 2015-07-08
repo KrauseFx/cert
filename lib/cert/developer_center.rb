@@ -38,7 +38,7 @@ module Cert
         type_id = current['certificateTypeDisplayId']
         url = "/account/ios/certificate/certificateContentDownload.action?displayId=#{display_id}&type=#{type_id}"
 
-        output = File.join(TMP_FOLDER, "#{display_id}-#{type_id}.cer")
+        output = File.join(Cert.config[:output_path], "#{display_id}-#{type_id}.cer")
         download_url(url, output)
         if FastlaneCore::CertChecker.is_installed?output
           # We'll use this one, since it's installed on the local machine
@@ -100,7 +100,7 @@ module Cert
       download_button = wait_for_elements(".button.small.blue").first
       url = download_button['href']
 
-      path = File.join(TMP_FOLDER, "certificate.cer")
+      path = File.join(Cert.config[:output_path], "certificate.cer")
       download_url(url, path)
 
       certificate_id = url.match(/.*displayId=(.*)&type.*/)[1]
@@ -109,7 +109,7 @@ module Cert
       ENV["CER_CERTIFICATE_ID"] = certificate_id
       Helper.log.info "Successfully downloaded latest .cer file to '#{path}' (#{certificate_id})".green
 
-      Cert::KeychainImporter::import_file(path)
+      Cert::KeychainImporter::import_file(path) unless Cert.config[:skip_keychain_import]
     rescue => ex
       error_occured(ex)
     end

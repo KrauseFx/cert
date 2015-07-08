@@ -40,7 +40,20 @@ module Cert
                                      optional: true,
                                      verify_block: Proc.new do |value|
                                         raise "File not found at path '#{value}'".red unless File.exists?value
-                                     end)
+                                     end),
+        FastlaneCore::ConfigItem.new(key: :output_path,
+                                     short_option: "-o",
+                                     env_name: "CERT_OUTPUT_PATH",
+                                     description: "Directory in which the signing request, private key and certificate should be stored",
+                                     default_value: "/tmp/cert/",
+                                     optional: true),
+        FastlaneCore::ConfigItem.new(key: :skip_keychain_import,
+                                     short_option: "-i",
+                                     env_name: "CERT_SKIP_KEYCHAIN_IMPORT",
+                                     description: "By default, the certificate will be imported into keychain on your local machine. Setting this flag will skip this action",
+                                     optional: true,
+                                     is_string: false,
+                                     default_value: false)
       ]
     end
   end
