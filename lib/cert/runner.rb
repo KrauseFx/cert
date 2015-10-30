@@ -15,6 +15,12 @@ module Cert
       Spaceship.select_team
       Helper.log.info "Successfully logged in"
 
+      if Cert.config[:revoke_expired]
+        expired_certs.each do |certificate|
+          Helper.log.info "#{certificate.id} #{certificate.name} has expired, revoking"
+          certificate.revoke!
+        end
+      end
       cert_path = find_existing_cert
       if cert_path.nil? || Cert.config[:force]
         if create_certificate # no certificate here, creating a new one
@@ -22,6 +28,12 @@ module Cert
         else
           raise "Something went wrong when trying to create a new certificate..."
         end
+      end
+    end
+
+    def expired_certs
+      certificates.select do |certificate|
+        certificate.expires < Time.now
       end
     end
 
