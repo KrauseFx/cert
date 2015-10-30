@@ -33,7 +33,7 @@ module Cert
 
     def expired_certs
       certificates.select do |certificate|
-        certificate.expires < Time.now
+        certificate.expires < Time.now.utc
       end
     end
 
