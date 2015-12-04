@@ -25,7 +25,6 @@ module Cert
           Helper.log.info "#{certificate.id} #{certificate.name} has expired, revoking"
           certificate.revoke!
         end
-        return
       end
 
       should_create = Cert.config[:force]
