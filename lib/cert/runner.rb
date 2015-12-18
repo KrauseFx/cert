@@ -124,7 +124,7 @@ module Cert
     def store_certificate(certificate)
       path = File.expand_path(File.join(Cert.config[:output_path], "#{certificate.id}.cer"))
       raw_data = certificate.download_raw
-      File.write(path, raw_data)
+      File.write(path, raw_data, encoding: "ASCII-8BIT")
       return path
     end
   end
